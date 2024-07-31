@@ -8,13 +8,14 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (inputValue.trim() !== "") {
-      setItems([...items, inputValue.trim()]);
+      const newItem = { id: Date.now(), text: inputValue.trim() };
+      setItems([...items, newItem]);
       setInputValue("");
     }
   };
 
-  const handleDelete = (itemToDelete) => {
-    setItems(items.filter((item) => item !== itemToDelete));
+  const handleDelete = (idToDelete) => {
+    setItems(items.filter((item) => item.id !== idToDelete));
   };
 
   return (
@@ -33,11 +34,11 @@ const App = () => {
             <button type="submit">Add</button>
           </form>
           <ul className={styles.list}>
-            {items.map((item, index) => (
-              <li key={index} className={styles.listItem}>
-                {item}
+            {items.map((item) => (
+              <li key={item.id} className={styles.listItem}>
+                {item.text}
                 <button
-                  onClick={() => handleDelete(item)}
+                  onClick={() => handleDelete(item.id)}
                   className={styles.deleteButton}
                 >
                   ❌
